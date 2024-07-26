@@ -1,7 +1,7 @@
 import { Schema, Types, model, models } from "mongoose";
 import match from "nodemon/lib/monitor/match";
 
-const UserSchema = newSchema({
+const UserSchema = new Schema({
     email:{
         type: String,
         unique: [true, 'Email Already Exists!'],

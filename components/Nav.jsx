@@ -7,15 +7,16 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const Nav = () => {
   const isUserLoggedIn = true;
+  const {data: session} = useSession();
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, settoggleDropdown] = useState(false);
 
   useEffect(() => {
-    const fetchProviders = async () => {
+    const setUpProviders = async () => {
       const response = await getProviders();
       setProviders(response);
     };
-    setProviders();
+    setUpProviders();
   }, []);
 
   return (
@@ -28,12 +29,12 @@ const Nav = () => {
           height={50}
           className="object-contain"
         />
-        <p className="logo_text">Promptly</p>
+        <p className="logo_text"> Promptly </p>
       </Link>
 
       {/* Desktop Nav */}
       <div className="sm:flex hidden">
-        {isUserLoggedIn ? (
+        {session?.user  ? (
           <div className="flex gap-3 md:gap-5">
             <Link href={"/create-post"} className="black_btn">
               Create Post
@@ -70,7 +71,7 @@ const Nav = () => {
 
       {/* Mobile Nav */}
       <div className="sm:hidden flex relative bg-white">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className="flex">
             <Image
               src="/assets/images/logo.png"
